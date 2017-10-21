@@ -1,7 +1,7 @@
-let mysql = require("mysql");
-let inquirer = require("inquirer");
+var mysql = require("mysql");
+var inquirer = require("inquirer");
 
-let connection = mysql.createConnection({
+var connection = mysql.createConnection({
 	host: "localhost",
 	port: 3306,
 	user: "root",
@@ -16,7 +16,7 @@ connection.connect(function(error) {
 });
 
 function readData() {
-	let query = "SELECT id, product_name, price FROM products";
+	var query = "SELECT id, product_name, price FROM products";
 	connection.query(query, function(error, response){
 		if (error) throw error;
 		console.log(JSON.stringify(response, null, 4));
@@ -39,10 +39,10 @@ function userQuery() {
 			}
 		])
 		.then(function(answer){
-			let query = "SELECT stock_quantity, product_sales FROM products WHERE id =" + answer.id;
+			var query = "SELECT stock_quantity, product_sales FROM products WHERE id =" + answer.id;
 			connection.query(query, function(error, response) {
 				if (answer.quantity <= response[0].stock_quantity) {
-						let query = "SELECT price FROM products WHERE ?";
+						var query = "SELECT price FROM products WHERE ?";
 						connection.query(query, {id: answer.id}, function(error, response) {
 							console.log("Your total is: $" + (response[0].price * answer.quantity));
 						})
